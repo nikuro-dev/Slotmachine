@@ -98,9 +98,7 @@ def get_bet():
         else:
             print("please enter a number")
     return amount
-
-def main():
-    balance = deposit()
+def game(balance ):
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -118,5 +116,17 @@ def main():
     winnigs, winnig_lines = check_winnigs(slots, lines, bet, symbol_value)
     print(f"you won ${winnigs}")
     print(f"you won on lines:", *winnig_lines)
+    return winnigs - total_bet
+
+def main():
+    balance = deposit()
+    while True:
+        print(f"currnet balance is ${balance}")
+        spin = input("press enter to spin (press q to quit)")
+        if spin == "q":
+            print("game ended")
+            break
+        balance += game(balance)
+    print(f"you left with ${balance}")       
 if __name__ == "__main__":
     main()
