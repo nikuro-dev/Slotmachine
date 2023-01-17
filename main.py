@@ -12,6 +12,28 @@ MAX_LINES = 3
 MAX_BET = 100
 MIN_BET = 1
 
+symbol_value = {
+    "A" : 5,
+    "B" : 4,
+    "C" : 3,
+    "D" : 2
+}
+
+def check_winnigs(columns, lines, bet, values):
+    winnigs = 0
+    winnig_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnigs += values[symbol] * bet
+            winnig_lines.append(lines + 1)
+    return winnigs, winnig_lines
+    
+    
 def spin_slot_machine(rows,cols,symbols):
     all_symbols = []
     for symbol, symbol_count in symbols.items():
@@ -93,6 +115,8 @@ def main():
 
     slots = spin_slot_machine(ROWS,COLS,symbol_count)
     print_slot_machine(slots)
-    
+    winnigs, winnig_lines = check_winnigs(slots, lines, bet, symbol_value)
+    print(f"you won ${winnigs}")
+    print(f"you won on lines:", *winnig_lines)
 if __name__ == "__main__":
     main()
